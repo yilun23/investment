@@ -4,33 +4,8 @@ import sqlite3
 from tqdm import tqdm
 
 from Yfinance import get_twsk_symbols,get_twsk_o_symbols
-# =============================================================================
-# result = r"C:\Users\Brian\Desktop\\"
-#
-#
-# yday = "02"           #起始日
-# month = "08"          #起始月
-# ynote = month + yday
-# =============================================================================
 
 
-
-# ===============================================================================================================
-
-# =============================================================================
-# #######1、成交量分析#######括號內填倍率
-# ###上市
-# Stock_turnover = twsk_tunover_analysis(2)
-# #寫入csv
-# Stock_turnover.to_csv(result + '/上市成交量分析{}.csv'.format(ynote), index=False)
-#
-# ###櫃買
-# Stock_o_turnover = twsk_o_tunover_analysis(2.5)
-# #寫入csv
-# Stock_o_turnover.to_csv(result + '/櫃買成交量分析{}.csv'.format(ynote), index=False)
-# =============================================================================
-
-# ===============================================================================================================
 
 def twsk_tunover_analysis(percent):
     #上市均價
