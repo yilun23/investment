@@ -2,43 +2,8 @@ import pandas as pd
 import requests
 import sqlite3
 
-# =============================================================================
-# result = r"C:\Users\Brian\Desktop\\"
-#
-# yday = "02"           #起始日
-# month = "08"          #起始月
-# ynote = month + yday
-# =============================================================================
-# ===============================================================================================================
-
-# =============================================================================
-# #######外資買賣超#######
-# #買超
-# ###外資D, 投信DD, 主力F
-# ###上市=0, 櫃買=1
-# dic = ["D", "DD", "F"]
-# for key in dic:
-#     df = get_buy(key, 0)
-#
-#     get_buy(key, 1)
-# df.to_excel(result + '/df.xlsx', index=False)
-# #賣超
-# ###外資DA, 投信DE, 主力FA
-# ###上市=0, 櫃買=1
-# dic = ["DA", "DE", "FA"]
-# for key in dic:
-#     get_sell(key, 0)
-#     get_sell(key, 1)
-# =============================================================================
 
 
-# =============================================================================
-# category = "D"
-# mode = 0
-# days = 1
-# =============================================================================
-# ===============================================================================================================
-######買賣超
 #買超
 def get_buy(category, mode):
     if mode == 0:
@@ -46,12 +11,10 @@ def get_buy(category, mode):
     elif mode == 1:
         label = "櫃買"
     dic = {"D":"外資", "DD":"投信", "F":"主力"}
-    #wb = pd.ExcelWriter(result + '{}買超{} {}.xlsx'.format(label, dic[category], ynote), engine = 'xlsxwriter')
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/111.25 (KHTML, like Gecko) Chrome/99.0.2345.81 Safari/123.36'}
     conn = sqlite3.connect('money.db')
     botton = ['1', '5', '10', '30']
     #抓取外資買超數據
-    #merge_all = pd.DataFrame()
     for days in botton:
         url = f'https://fubon-ebrokerdj.fbs.com.tw/z/zg/zg_{category}_{mode}_{days}.djhtm'
         r = requests.get(url, headers=headers)
@@ -87,13 +50,8 @@ def get_buy(category, mode):
         else:
             merge = merge.iloc[:, lambda merge: [0,3,6]]
             merge_all = pd.merge(left=merge_all, right=merge, on='股票代號', how='outer')
-        #merge_all = pd.concat([merge_all, merge], axis=0)
 
-
-        #寫入excel
-        #merge.to_excel(wb,index = False,sheet_name="{}{}日".format(dic[category], days))
     conn.close()
-    #wb.close()
     return merge_all
 #賣超
 def get_sell(category, mode):
@@ -102,12 +60,10 @@ def get_sell(category, mode):
     elif mode == 1:
         label = "櫃買"
     dic = {"DA":"外資", "DE":"投信", "FA":"主力"}
-    #wb = pd.ExcelWriter(result + '{}買超{} {}.xlsx'.format(label, dic[category], ynote), engine = 'xlsxwriter')
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/111.25 (KHTML, like Gecko) Chrome/99.0.2345.81 Safari/123.36'}
     conn = sqlite3.connect('money.db')
     botton = ['1', '5', '10', '30']
     #抓取外資買超數據
-    #merge_all = pd.DataFrame()
     for days in botton:
         url = f'https://fubon-ebrokerdj.fbs.com.tw/z/zg/zg_{category}_{mode}_{days}.djhtm'
         r = requests.get(url, headers=headers)
@@ -143,11 +99,6 @@ def get_sell(category, mode):
         else:
             merge = merge.iloc[:, lambda merge: [0,3,6]]
             merge_all = pd.merge(left=merge_all, right=merge, on='股票代號', how='outer')
-        #merge_all = pd.concat([merge_all, merge], axis=0)
 
-
-        #寫入excel
-        #merge.to_excel(wb,index = False,sheet_name="{}{}日".format(dic[category], days))
     conn.close()
-    #wb.close()
     return merge_all
