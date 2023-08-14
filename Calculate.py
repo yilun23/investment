@@ -36,21 +36,7 @@ for i in range(len(date_list)-2):
     df_merge.insert(len(df_merge.columns),f'{i+2}日持股', value=merge.iloc[:,len(merge.columns)-1])
 conn.close()
 
-# ===============================================================================================================
-# =============================================================================
-# backup = pd.read_excel(result + "back.xlsx")
-# df_merge = pd.merge(left=current, right=backup, on='股票代號', how='inner')
-# ##shares
-# shares = current
-# shares["Shares_outstandings"] = current.apply(lambda row:0 if int(row['持股張數']) == 0 or float(row['持股比例'].replace("%","")) == 0 else   int(int(row['持股張數']) / (float(row['持股比例'].replace("%",""))/100) * 1000), axis=1)
-# shares = shares.iloc[:,lambda shares:[2,6]]
-# shares = shares.rename(columns = {"股票代號":"Stock_id"})
-# conn = sqlite3.connect('money.db')
-# shares.to_sql('Twsk_all_shares', conn, if_exists='append', index=False) 
-# conn.close()
-# =============================================================================
 
-# ===============================================================================================================
 
 
 ###合併外資、投信、主力一日到三十日買賣超排行
@@ -112,14 +98,6 @@ wb.close()
 
 
 
-
-# =============================================================================
-# current["股數"] = current.apply(lambda row:0 if int(row['持股張數']) == 0 or float(row['持股比例'].replace("%","")) == 0 else int( int(row['持股張數']) / float(float(row['持股比例'].replace("%",""))/100) * 1000), axis=1)
-# df = current[["股票代號", "股數"]]
-# df.columns = ["Stock_id", "Shares_outstandings"]
-# conn = sqlite3.connect('money.db')
-# df.to_sql('Twsk_all_shares', conn, if_exists='append', index=False) 
-# =============================================================================
 
 
 
